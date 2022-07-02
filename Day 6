@@ -1,0 +1,129 @@
+linked list 
+
+class Solution {
+public:
+    bool hasCycle(ListNode *head) {
+        ListNode*fast=head;
+        ListNode*slow=head;
+        if(head==NULL) return false;
+        while(fast!=NULL&&fast->next!=NULL)
+        {
+            slow=slow->next;
+            fast=fast->next->next;
+             if(slow==fast) return true;
+            
+        }
+        return false;
+    }
+};
+
+linked list 2
+
+
+
+class Solution {
+public:
+    ListNode *detectCycle(ListNode *head) {
+        ListNode*slow=head;
+        ListNode*fast=head;
+        while(fast!=NULL&&fast->next!=NULL)
+        {
+            slow=slow->next;
+            fast=fast->next->next;
+            if(slow==fast) break;
+        }
+        
+        if(fast==NULL||fast->next==NULL) return NULL;
+        
+        slow=head;
+        while(slow!=fast)
+        {
+            slow=slow->next;
+            fast=fast->next;
+        }
+        return slow;
+        
+    }
+};
+
+intersetion of 2 ll
+
+class Solution {
+public:
+    ListNode *getIntersectionNode(ListNode *headA, ListNode *headB) {
+        ////////////O(m^n)//////////
+        /*
+        ListNode*a=headA;
+        while(a!=NULL)
+        {
+            ListNode*b=headB;
+            while(b!=NULL)
+            {
+                if(a==b) return a;
+                b=b->next;
+            }
+            a=a->next;
+        }
+        return NULL;
+        */
+        ///////////////////////////
+        /////////O(m+n)////////////
+        
+        ListNode*a=headA;
+        ListNode*b=headB;
+        
+        while(a!=b)
+        {
+            if(a==NULL) a=headB;
+            else a=a->next;
+            
+            if(b==NULL) b=headA;
+            else b=b->next;
+        }
+        return a;
+        
+    }
+};
+
+palindrome ll
+
+class Solution {
+public:
+    bool isPalindrome(ListNode* head) {
+        ListNode*slow=head;
+        ListNode*fast=head;
+        ListNode*curr;
+        ListNode*prev;
+        ListNode*tmp;
+        ListNode*s;
+        while(fast!=NULL&&fast->next!=NULL)
+        {
+            slow=slow->next;
+            fast=fast->next->next;
+        }
+        prev=slow;
+        curr=slow->next;
+        prev->next=NULL;
+        while(curr!=NULL)
+        {
+            tmp=curr->next;
+            curr->next=prev;
+            prev=curr;
+            curr=tmp;
+        }
+        slow=head;
+        fast=prev;
+        while(fast!=NULL)
+        {
+            if(slow->val!=fast->val) return false;
+            else
+            {
+                slow=slow->next;
+                fast=fast->next;
+            }
+        }
+        return true;
+        
+        
+    }
+};
