@@ -1,0 +1,112 @@
+copy ll with random pointer
+
+class Solution {
+public:
+    Node* copyRandomList(Node* head) {
+        map<Node*,Node*> m;
+        Node*tmp=head;
+        
+        while(tmp)
+        {
+            m[tmp]=new Node(tmp->val);
+            tmp=tmp->next;
+        }
+        
+        tmp=head;
+         while(tmp)
+        {
+            m[tmp]->next=m[tmp->next];
+             m[tmp]->random=m[tmp->random];
+             tmp=tmp->next;
+        }
+        return m[head];
+    }
+};
+
+
+remove duplicate from sorted array
+
+ int removeDuplicates(vector<int>& nums) {
+        /////////O(nlogn)+O(n)////O(n)///////
+        /*
+        set<int>s;
+        for(int i=0;i<nums.size();i++)
+        {
+            s.insert(nums[i]);
+        }
+        int j=0;
+        for(auto x:s)
+        {
+            nums[j]=x;
+            j++;
+        }
+        return j;
+        */
+        /////////////////////////////////////
+        ///////////O(N)//////////////////////
+        int i=0;
+        int j=1;
+        while(j!=nums.size())
+        {
+            if(nums[i]!=nums[j])
+            {
+                ++i;
+                nums[i]=nums[j];
+            }
+            j++;
+        }
+       
+        return i+1;
+        
+        
+    }
+};
+
+max consecutive 1
+
+class Solution {
+public:
+    int findMaxConsecutiveOnes(vector<int>& nums) {
+    
+        int c=0;
+        int maxx=0;
+        for(int i=0;i<nums.size();i++)
+        {
+            nums[i]==1?c++:c=0;
+            maxx=max(maxx,c);
+        }
+        return maxx;
+    }
+};
+
+
+rotate list
+
+
+class Solution {
+public:
+    ListNode* rotateRight(ListNode* head, int k) {
+        
+         if(head==NULL||head->next==NULL||k==0) return head;
+        ListNode*tmp=head;
+        int len=1;
+        while(tmp->next!=NULL)
+        {
+            tmp=tmp->next;
+            len++;
+        }
+        tmp->next=head;
+        ListNode*slow=head;
+        int l=k%len;
+        int end=len-l;
+        while(end!=0)
+        {
+            tmp=tmp->next;
+            end--;
+        }
+        ListNode*a=tmp->next;
+        tmp->next=NULL;
+        head=a;
+        return head;
+    }
+};
